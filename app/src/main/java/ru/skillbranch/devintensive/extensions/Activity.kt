@@ -2,7 +2,9 @@ package ru.skillbranch.devintensive.extensions
 
 import android.app.Activity
 import android.graphics.Rect
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import ru.skillbranch.devintensive.utils.Utils.convertDpToPx
 
 fun Activity.hideKeyboard() {
     val view = currentFocus
@@ -12,14 +14,16 @@ fun Activity.hideKeyboard() {
     }
 }
 
-fun Activity.isKeyboardOpen(): Boolean {
-    val rect = Rect()
-    window.decorView.getWindowVisibleDisplayFrame(rect)
-    val screenHeight = window.decorView.rootView.height
-    val difference = screenHeight - (rect.bottom - rect.top)
-    return difference > 200
+fun Activity.isKeyboardOpen(): Boolean{
+    val rootView = findViewById<View>(android.R.id.content)
+    val visibleBounds = Rect()
+    rootView.getWindowVisibleDisplayFrame(visibleBounds)
+    val heightDiff = rootView.height - visibleBounds.height()
+    val marginOfError = convertDpToPx(this, 50)
+
+    return heightDiff > marginOfError
 }
 
 fun Activity.isKeyboardClosed(): Boolean {
-    return !isKeyboardOpen()
+    return this.isKeyboardOpen().not()
 }
