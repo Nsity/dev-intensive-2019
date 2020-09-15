@@ -1,9 +1,5 @@
 package ru.skillbranch.devintensive.utils
 
-import android.content.Context
-import java.util.*
-import kotlin.math.roundToInt
-
 object Utils {
 
     fun parseFullName(fullName: String?): Pair<String?, String?> {
@@ -54,12 +50,6 @@ object Utils {
         }
 
         return result
-    }
-
-
-    fun convertDpToPx(context: Context, dp: Int): Int {
-        val scale = context.resources.displayMetrics.density
-        return (dp * scale + 0.5f).toInt()
     }
 
 }
